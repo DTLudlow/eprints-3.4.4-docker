@@ -1,0 +1,27 @@
+version: '3'
+services:
+  eprintsdb:
+    build:
+      context: .
+      dockerfile: eprintsdb.dockerfile
+    ports:
+      - "3306:3306"
+    container_name: eprintsdb
+    volumes:
+      - mariadb:/var/lib/mysql
+  eprintshttpd:
+    build:
+      context: .
+      dockerfile: eprintshttpd.dockerfile
+      args:
+        EPRINTS_HOSTNAME: localhost
+    ports:
+      - "80:80"
+    container_name: eprintshttpd
+    volumes:
+      - eprints:/usr/share/eprints
+      - ./shared:/usr/share/eprints/shared
+volumes:
+  eprints:
+  mariadb:
+  shared:
