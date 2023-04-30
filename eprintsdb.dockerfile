@@ -1,6 +1,6 @@
 FROM mariadb
 
-MAINTAINER "Justin Bradley" <justin@soton.ac.uk>
+LABEL MAINTAINER="Justin Bradley <justin@soton.ac.uk>"
 
 ENV MYSQL_DATABASE=pub \
     MYSQL_USER=pub \

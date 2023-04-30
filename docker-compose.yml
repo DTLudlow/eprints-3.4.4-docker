@@ -20,7 +20,7 @@ services:
     container_name: eprintshttpd
     volumes:
       - eprints:/usr/share/eprints
-      - ./shared:/usr/share/eprints/shared
+      - ./shared:/var/shared
 volumes:
   eprints:
   mariadb:
