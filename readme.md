@@ -18,9 +18,9 @@ A modified version of the original by Justin Bradley, with the following improve
 
 ## Building the Repository
 
-1. Open Ubuntu via the Remote Explorer extension in Visual Studio Code
+1. Copy the contents of this repository into /home/eprints
 2. cd into /home/eprints
-3. Build the Docker container by typing `docker compose up --build -d`. This will take a little time to complete, as Docker is creating the volumes and acquiring everything EPrints needs to run.
+3. Build the Docker container by typing `docker compose up --build -d` in a terminal. This will take a little time to complete, as Docker is creating the volumes and acquiring everything EPrints needs to run.
 
 ## Completing setup
 
