@@ -1,5 +1,0 @@
-#0 1.610 error: Failed dependencies:
-#0 1.610        perl(XML::LibXSLT) is needed by eprints-3.4.4-1.el7.noarch
-#0 1.610        perl(MIME::Lite) is needed by eprints-3.4.4-1.el7.noarch
-#0 1.610        perl(Apache::DBI) is needed by eprints-3.4.4-1.el7.noarch
-#0 1.610        perl(IO::String) is needed by eprints-3.4.4-1.el7.noarch
