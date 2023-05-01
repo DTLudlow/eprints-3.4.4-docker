@@ -1,41 +1,25 @@
-#FROM centos/httpd
-FROM almalinux
+FROM centos/httpd
 
 LABEL MAINTAINER="Justin Bradley <justin@soton.ac.uk>"
 
 ARG EPRINTS_HOSTNAME=localhost
 ENV EPRINTS_HOSTNAME="${EPRINTS_HOSTNAME}"
 
-# Dependencies
-RUN yum -y install dnf-plugins-core
-RUN yum config-manager --set-enabled powertools
-RUN yum -y install elinks
-RUN dnf -y -q install epel-release
+RUN yum -y -q install httpd; yum clean all; systemctl enable httpd.service
 
-RUN dnf -y -q install perl libxslt httpd perl-DBI perl-DBD-MySQL perl-IO-Socket-SSL perl-Time-HiRes \
-    perl-CGI perl-Digest-MD5 perl-Digest-SHA perl-JSON perl-XML-LibXML perl-XML-SAX \
-    perl-Text-Unidecode perl-JSON perl-Unicode-Collate tetex-latex wget \
-    poppler-utils unzip cpan
+RUN yum -y -q install epel-release
+RUN yum -y -q install perl-DBI perl-DBD-MySQL perl-CGI perl-XML-LibXML perl-XML-LibXSLT perl-XML-SAX perl-Digest-SHA perl-IO-Socket-SSL \
+    perl-MIME-Lite 
+RUN yum -y -q install tetex-latex perl-IO-String perl-Text-Unidecode perl-Apache-DBI
+RUN yum -y -q install perl-JSON libselinux-utils
 
-RUN dnf -y -q install ImageMagick ImageMagick-devel
-
-RUN dnf -y -q install mod_perl libxslt
-#RUN dnf -y -q install mod_perl libxslt perl-io-string perl-apache-dbi perl-mime-lite
-
-#RUN cpan XML::LibXML
-#RUN cpan -i XML::LibXSLT
-RUN cpan -i MIME::Lite
-RUN cpan -i Apache::DBI
-RUN cpan -i IO::String
-#RUN cpan -T mod_perl2
-RUN cpan -i Pod::LaTeX
+RUN yum -y -q install search wget mod_perl unzip elinks poppler-utils ImageMagick
 
 RUN rpm --install https://files.eprints.org/2715/8/eprints-3.4.4-1.el7.noarch.rpm
 RUN touch /usr/share/eprints/cfg/apache/tmp.conf
 
 ADD https://files.eprints.org/2715/2/eprints-3.4.4-flavours.tar.gz /usr/share/eprints/flavours.tgz
 RUN cd /usr/share/eprints && tar -xzvf flavours.tgz && mv eprints-3.4.4/flavours/* flavours/
-#RUN rmdir /usr/share/eprints/eprints-3.4.4/
 
 ADD https://files.eprints.org/2411/3/pub.conf.template /usr/share/eprints/cfg/apache/pub.conf.template
 ADD https://files.eprints.org/2411/2/pub.tgz /usr/share/eprints/archives/
@@ -55,4 +39,3 @@ RUN su eprints -c "/usr/share/eprints/bin/indexer start"
 EXPOSE 80
 
 CMD ./run-httpd.sh 
-
