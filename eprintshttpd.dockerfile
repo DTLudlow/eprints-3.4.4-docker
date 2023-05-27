@@ -37,5 +37,3 @@ RUN chown -R eprints:eprints /usr/share/eprints/
 RUN su eprints -c "/usr/share/eprints/bin/indexer start"
 
 EXPOSE 80
-
-CMD ./run-httpd.sh 

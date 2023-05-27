@@ -21,6 +21,7 @@ services:
     volumes:
       - eprints:/usr/share/eprints
       - ./shared:/var/shared
+    command: "httpd -k start -DFOREGROUND"
 volumes:
   eprints:
   mariadb:
