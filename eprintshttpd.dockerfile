@@ -1,4 +1,4 @@
-FROM almalinux:8
+FROM almalinux:latest
 
 LABEL ORIGINAL MAINTAINER="Justin Bradley <justin@soton.ac.uk>"
 
@@ -8,15 +8,24 @@ ENV EPRINTS_HOSTNAME="${EPRINTS_HOSTNAME}"
 RUN dnf clean all
 
 # Install necessary additional repositories
-RUN dnf -yq install epel-release
-RUN dnf config-manager --set-enabled powertools
+RUN dnf -yq install epel-release 'dnf-command(config-manager)'
+RUN dnf config-manager --set-enabled crb
 
 # Install and enable Apache
 RUN dnf -yq install httpd
 RUN systemctl enable httpd.service
 
-# Download the Eprints 3.4.4 RPM, allowing dnf to resolve all dependencies
-RUN dnf -yq install https://files.eprints.org/2715/8/eprints-3.4.4-1.el7.noarch.rpm
+# Install Dependencies available from the AlmaLinux repositories
+RUN dnf -yq install libxml2 libxslt httpd mod_perl perl-DBI perl-DBD-MySQL perl-IO-Socket-SSL perl-Time-HiRes \
+   perl-CGI perl-Digest-MD5 perl-Digest-SHA perl-JSON perl-XML-LibXML perl-XML-LibXSLT perl-XML-SAX \
+   perl-MIME-Lite perl-Text-Unidecode perl-JSON perl-Unicode-Collate tetex-latex wget gzip tar \
+   ImageMagick poppler-utils chkconfig unzip cpan python3-html2text perl-IO-String perl-MIME-Types perl-Digest-SHA1
+
+# Install Apache::DBI from cpan, as not available elsewhere
+RUN cpan Apache::DBI
+
+# Download the Eprints 3.4.4 RPM. Need to use rpm --nodeps, as it doesn't like the cpan version of Apache::DBI
+RUN rpm --install --nodeps https://files.eprints.org/2715/8/eprints-3.4.4-1.el7.noarch.rpm
 RUN touch /usr/share/eprints/cfg/apache/tmp.conf
 
 # Download and extract Flavours

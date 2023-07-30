@@ -3,7 +3,7 @@
 A modified version of the original by Justin Bradley, with the following improvements:
 
 - No unmet dependencies
-- Updated to use AlmaLinux base image
+- Updated to use AlmaLinux v9 base image
 - Uses EPrints v3.4.4 RPM
 - Includes fix for Apache segmentation issue caused by XML::LibXSLT
 - Includes a directory for ease of moving files to and from the container  (`/var/shared` directory within the container)
