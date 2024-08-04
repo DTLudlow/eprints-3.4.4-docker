@@ -33,8 +33,9 @@ RUN cd /usr/share/eprints/archives/pub/cfg/cfg.d && sed -e s/docker/${EPRINTS_HO
 RUN cd /usr/share/eprints/cfg/apache && sed -e s/docker/${EPRINTS_HOSTNAME}/ pub.conf.template > pub.conf
 
 # Update global Apache config
-RUN cd /etc/httpd/conf/ &&  sed -e 's/User apache/User eprints/' -e 's/Group apache/Group eprints/' httpd.conf > c && mv -f c httpd.conf
-RUN cd /etc/httpd/conf/ && echo 'ServerName localhost' >> httpd.conf
+RUN cd /etc/httpd/conf/ &&  sed -e 's/User apache/User eprints/' -e 's/Group apache/Group eprints/' \
+    -e 's/#ServerName www.example.com:80/ServerName localhost/' httpd.conf > c && mv -f c httpd.conf
+#RUN cd /etc/httpd/conf/ && echo 'ServerName localhost' >> httpd.conf
 
 # Fix Apache segmentation issue
 RUN cd /etc/httpd/conf.modules.d/ && \
