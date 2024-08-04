@@ -1,10 +1,10 @@
-# EPrints 3.4.4 Docker Image
+# EPrints 3.4.5 Docker Image
 
 A modified version of the original by Justin Bradley, with the following improvements:
 
 - No unmet dependencies
 - Updated to use AlmaLinux v9 base image
-- Uses EPrints v3.4.4 RPM
+- Now obtains EPrints 3.4.5 from the Eprints GitHub repository at https://github.com/eprints/eprints3.4
 - Includes fix for Apache segmentation issue caused by XML::LibXSLT
 - Includes a directory for ease of moving files to and from the container  (`/var/shared` directory within the container)
 
@@ -26,11 +26,11 @@ In order to ensure that EPrints is set up correctly:
 
 1. Ensure that the terminal prompt is in the eprints folder
 2. Open the Docker container in the terminal: `docker compose exec eprintshttpd bash​​​​​​​`
-3. Run `chown -R -c eprints.eprints /usr/share/eprints/` to ensure that the eprints user owns all files in the eprints directory
+3. Run `chown -R -c eprints.eprints /opt/eprints3` to ensure that the eprints user owns all files in the eprints directory
 4. Switch to the eprints user with: `su eprints`
-5. Run `/usr/share/eprints/bin/generate_static pub` to ensure that there are no broken links on the homepage
-6. Run `/usr/share/eprints/bin/epadmin update pub` to ensure the admin user is added to the database
-7. Run `/usr/share/eprints/bin/epadmin reload pub` to reload the archive's configuration
+5. Run `/opt/eprints3/bin/generate_static pub` to ensure that there are no broken links on the homepage
+6. Run `/opt/eprints3/bin/epadmin update pub` to ensure the admin user is added to the database
+7. Run `/opt/eprints3/bin/epadmin reload pub` to reload the archive's configuration
 8. Type `exit` to switch back to the root user
 9. Run `httpd -k restart` to restart the web server
 

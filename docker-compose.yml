@@ -1,4 +1,3 @@
-#version: '3.4.4'
 services:
   eprintsdb:
     build:
@@ -19,7 +18,7 @@ services:
       - "80:80"
     container_name: eprintshttpd
     volumes:
-      - eprints:/usr/share/eprints
+      - eprints:/opt/eprints3
       - ./shared:/var/shared
     command: "httpd -k start -DFOREGROUND"
 volumes:
